@@ -3,8 +3,7 @@ CREATE PROCEDURE insertNewJournal(IN _action VARCHAR(10), IN oldValue VARCHAR(50
 BEGIN
     INSERT INTO `journal` (`datetime`, `action`, `oldValue`, `newValue`)
     VALUES (NOW(), _action, oldValue, newValue);
-END;
-*
+END *
 DELIMITER ;
 
 ALTER TABLE employees AUTO_INCREMENT = 0;

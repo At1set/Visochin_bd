@@ -1,0 +1,22 @@
+DELIMITER $$
+CREATE PROCEDURE `increasePrice`(IN brand VARCHAR(50), IN count INT UNSIGNED)
+BEGIN
+  	DECLARE done INT DEFAULT 0;
+  	DECLARE current_brand VARCHAR(50);
+	DECLARE current_price INT UNSIGNED;
+  
+  	DECLARE carscur CURSOR FOR
+ 		SELECT `brand`, `price` FROM `cars`;
+  	DECLARE CONTINUE HANDLER FOR SQLSTATE '02000' SET done=1;
+  	
+    OPEN carscur;
+    FETCH carscur INTO current_brand, current_price;
+    WHILE done = 0 DO
+		IF current_brand = brand THEN
+ 			UPDATE cars SET `price` = current_price + count WHERE cars.`brand` = brand;
+ 		END IF;
+        FETCH carscur INTO current_brand, current_price;
+ 	END WHILE;
+    CLOSE carscur;
+END; $$
+DELIMITER ;

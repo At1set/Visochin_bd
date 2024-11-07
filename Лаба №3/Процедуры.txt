@@ -1,0 +1,18 @@
+Процедура №1
+DELIMITER $$
+CREATE PROCEDURE `addStudent`(IN name VARCHAR(10), IN mark INT)
+BEGIN
+  DECLARE max_id INT;
+  INSERT INTO `students` (`name`) VALUES (name);
+  SET max_id = (SELECT MAX(`id`) FROM `students`);
+  UPDATE `students` SET `mark`=FLOOR((RAND() * 100) % 101) WHERE id=max_id;
+END; $$
+DELIMITER ;
+
+Процедура №2
+DELIMITER $$
+CREATE PROCEDURE `average2Mark`(IN mark1 INT, IN mark2 INT)
+BEGIN
+  SELECT (mark1 + mark2) / 2 AS `Средний балл`;
+END; $$
+DELIMITER ;
