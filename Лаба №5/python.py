@@ -14,11 +14,11 @@ class DataBase:
   
   def execute_query(self, query, params=None, isNeedFetch=False):
     connection = pymysql.connect(
-        host=self.bd_host,
-        user=self.bd_user,
-        password=self.bd_password,
-        database=self.bd_database,
-        cursorclass=pymysql.cursors.DictCursor
+      host=self.bd_host,
+      user=self.bd_user,
+      password=self.bd_password,
+      database=self.bd_database,
+      cursorclass=pymysql.cursors.DictCursor
     )
     result = None
     try:
