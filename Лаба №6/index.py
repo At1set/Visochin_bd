@@ -33,6 +33,13 @@ class DataBase:
   def get_table(self):
     query = """SELECT * FROM cars"""
     return self.execute_query(query, isNeedFetch=True)
+  
+  def get_fields(self):
+    query = f"DESCRIBE cars"
+    result = self.execute_query(query, isNeedFetch=True)
+    if result:
+      return [row['Field'] for row in result]
+    return []
 
 
 def save_file(content : str):
@@ -56,7 +63,27 @@ def save_file(content : str):
 
 def main():
   dataBase = DataBase("root", "", "127.0.0.1", "inf_system_labs")
-  save_file("123")
+  data = ""
+  fields = dataBase.get_fields()
+
+  if not fields: raise Exception("Ошибка, данная таблица не существует!")
+  
+  for field in fields:
+    if field == fields[-1]:
+      data += field + "\n\n"
+      continue
+    data += field + "\t"
+  
+  table = dataBase.get_table()
+  for row in table:
+    for field in fields:
+      value = str(row[field])
+      if field == fields[-1]:
+        data += value + "\n"
+        continue
+      data += value + "\t"
+  
+  save_file(data)
 
 
 if __name__ == "__main__":
